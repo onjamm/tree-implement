@@ -1,3 +1,7 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
 public class Traversal {
     public static void main(String[] args) {
     TreeNode<Integer> root = new TreeNode<>(10);
@@ -26,12 +30,18 @@ public class Traversal {
     stringRoot.right.left = new TreeNode<>("yo");
     stringRoot.right.right = new TreeNode<>("howdy");
     stringRoot.right.right.right = new TreeNode<>("santa");
+
+
+    // TreeNode<Integer> megaRoot = new TreeNode<Integer>(1);
+    // preorderIterative(megaRoot);
+    levelOrder(root);
+    // preOrder(megaRoot);
     // preorder(stringRoot);
     // // preorder(root); 
     // // postorder(root);
     // // inorder(root);
     // printGreaterThan(root, 1);
-    System.out.println(countNodes(root));
+    // System.out.println(countNodes(root));
     }
 
 
@@ -59,12 +69,41 @@ public class Traversal {
         printGreaterThan(current.left, threshold);
         printGreaterThan(current.right, threshold);
     }
+
+
+    public static void preorderIterative(TreeNode<?> root) {
+        Stack<TreeNode<?>> stack = new Stack<>();
+        stack.push(root);
+
+        while(!stack.isEmpty()) {
+         TreeNode<?> current = stack.pop();
+         if (current == null) continue;
+         System.out.println(current.data);
+         stack.push(current.right);
+         stack.push(current.left);
+         
+        }
+    }
     public static void preorder(TreeNode<?> current) {
         if(current == null) return;
         
         System.out.println(current.data);
         preorder(current.left);
         preorder(current.right);
+    }
+
+    public static void levelOrder(TreeNode<?> root) {
+        Queue<TreeNode<?>> queue = new LinkedList<>();
+
+        queue.offer(root);
+
+        while (!queue.isEmpty()){
+            TreeNode<?> current = queue.remove();
+            if(current == null) continue;
+            System.out.println(current.data);
+            queue.offer(current.left);
+            queue.offer(current.right);
+        }
     }
 
     //E inforces the types in the list - tighter bounds on type safety
